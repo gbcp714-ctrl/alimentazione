@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f6f7f9">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Alimentazione">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<title>Alimentazione</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--text:#17191f;--muted:#6b7280;--line:#e5e7eb;--accent:#0f62fe;--onbg:#eef5ff;--on:#174ea6;--offbg:#f3f4f6;--off:#4b5563;--out:#fff4e5}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:14px 12px 40px}
+header{position:sticky;top:0;z-index:20;background:rgba(246,247,249,.96);backdrop-filter:blur(10px);padding:8px 0 10px}
+h1{font-size:25px;margin:2px 0 4px}.sub{font-size:13px;color:var(--muted);line-height:1.4}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.tabs button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:11px;font-size:15px;font-weight:700}
+.tabs button.active{background:#111827;color:#fff}
+.view{display:none}.view.active{display:block}
+.card,.day{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin:12px 0}
+.hero{padding:18px}.hero h2{margin:0 0 7px;font-size:21px}.hero p{margin:0;color:var(--muted);line-height:1.45}
+.nav{display:flex;gap:7px;overflow:auto;padding:2px 0 4px}
+.nav a{text-decoration:none;color:#111827;background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 10px;font-size:13px;white-space:nowrap}
+.day h2,.card h2{font-size:20px;margin:0 0 4px}
+.meta{font-size:13px;color:var(--muted);margin-bottom:8px}
+.badge{display:inline-block;border-radius:999px;padding:3px 8px;font-size:12px;font-weight:700;margin-left:6px}.badge.on{background:var(--onbg);color:var(--on)}.badge.off{background:var(--offbg);color:var(--off)}.badge.out{background:var(--out);color:#8a4b08}
+.meal{padding:11px 0;border-top:1px solid var(--line)}.meal:first-of-type{border-top:none}.meal h3,.section h3{font-size:13px;margin:0 0 5px;text-transform:uppercase;letter-spacing:.04em}.meal p{font-size:16px;line-height:1.45;margin:0}.alt,.note{font-size:13px;color:var(--muted);display:block;margin-top:3px}.qty{font-weight:700}
+.section{margin-top:11px}
+.item{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line)}.item:last-child{border-bottom:none}
+input[type=checkbox]{width:22px;height:22px;margin-top:1px;accent-color:var(--accent);flex:0 0 auto}
+label{font-size:16px;line-height:1.35}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.controls button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;font-size:14px}
+details{margin-top:10px}summary{font-weight:700}.small{font-size:14px;line-height:1.5;color:#374151}
+@media(max-width:420px){.wrap{padding:10px 8px 30px}.card,.day{padding:12px;border-radius:14px}.meal p,label{font-size:15px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Alimentazione</h1>
+  <div class="sub">Piano settimanale + lista della spesa intelligente</div>
+  <div class="tabs">
+    <button id="tabPiano" class="active" onclick="showView('piano')">Piano alimentare</button>
+    <button id="tabSpesa" onclick="showView('spesa')">Lista della spesa</button>
+  </div>
+</header>
+
+<main id="piano" class="view active">
+  <div class="card hero">
+    <h2>Piano alimentare settimanale</h2>
+    <p>Calisthenics lunedì, mercoledì e venerdì. Le seconde scelte sostituiscono la prima scelta: non vanno sommate.</p>
+  </div>
+  <div class="nav"><a href="#lun">Lun</a><a href="#mar">Mar</a><a href="#mer">Mer</a><a href="#gio">Gio</a><a href="#ven">Ven</a><a href="#sab">Sab</a><a href="#dom">Dom</a><a href="#notePiano">Note</a></div>
+
+  <section class="day" id="lun"><h2>Lunedì <span class="badge on">ALLENAMENTO</span></h2><div class="meta">Allenamento circa 10:00/10:30–12:00</div>
+    <div class="meal"><h3>Colazione · 08:00–09:00</h3><p><span class="qty">~200 g Skyr / yogurt greco proteico</span> + <span class="qty">100 g mirtilli</span> + <span class="qty">60 g Familia Nature Crunch</span> + <span class="qty">4 noci</span>.</p></div>
+    <div class="meal"><h3>Pranzo · 12:30</h3><p><span class="qty">100 g pasta normale</span> + <span class="qty">2 uova</span> + zucchine o carote + <span class="qty">1 banana</span>.<span class="alt">2ª scelta: 100 g riso; 120 g ricotta al posto delle uova.</span></p></div>
+    <div class="meal"><h3>Spuntino · 16:30–17:00</h3><p><span class="qty">30 g Grana Padano</span>.<span class="alt">2ª scelta: 1 quadratino di fondente + una manciata di mandorle.</span></p></div>
+    <div class="meal"><h3>Cena · 20:00</h3><p><span class="qty">180 g salmone</span> + <span class="qty">200 g patate dolci</span> pesate a crudo + broccoli + olio EVO.<span class="alt">2ª scelta: 180 g petto di pollo; fagiolini o zucchine al posto dei broccoli.</span></p></div>
+  </section>
+
+  <section class="day" id="mar"><h2>Martedì <span class="badge off">OFF</span></h2>
+    <div class="meal"><h3>Colazione</h3><p><span class="qty">~200 g Skyr / yogurt greco proteico</span> + <span class="qty">100 g mirtilli</span> + <span class="qty">40 g Familia Nature Crunch</span> + 3–4 noci o mandorle.</p></div>
+    <div class="meal"><h3>Spuntino mattina · facoltativo</h3><p>Caffè o tè non zuccherato + 1–2 quadratini di fondente &gt;85%, solo se hai fame.</p></div>
+    <div class="meal"><h3>Pranzo</h3><p><span class="qty">130–150 g cottage cheese o ricotta</span> + pomodori/zucchine/carote + <span class="qty">1 cucchiaio EVO</span> + <span class="qty">50–60 g pasta o riso integrale</span> + <span class="qty">1 kiwi</span>.<span class="alt">Alternative: 2 uova o tonno naturale; 2–3 gallette o 1 fetta di pane integrale; frutta: mela, pera o frutti di bosco.</span></p></div>
+    <div class="meal"><h3>Spuntino</h3><p><span class="qty">30 g Grana</span>.<span class="alt">2ª scelta: 1/2 avocado.</span></p></div>
+    <div class="meal"><h3>Cena</h3><p><span class="qty">150–180 g pollo</span> + peperoni e/o insalata + olio EVO.<span class="alt">2ª scelta: tacchino o pesce magro. Niente pane o patate dolci.</span></p></div>
+  </section>
+
+  <section class="day" id="mer"><h2>Mercoledì <span class="badge on">ALLENAMENTO</span></h2><div class="meta">Allenamento circa 10:00/10:30–12:00</div>
+    <div class="meal"><h3>Colazione</h3><p><span class="qty">~200 g Skyr / yogurt greco proteico</span> + <span class="qty">100 g mirtilli</span> + <span class="qty">60 g Familia Nature Crunch</span> + <span class="qty">4 noci</span>.</p></div>
+    <div class="meal"><h3>Pranzo</h3><p><span class="qty">100 g riso</span> + <span class="qty">2 uova</span> + carote o zucchine + <span class="qty">1 banana</span>.<span class="alt">2ª scelta: 100 g pasta; 120 g ricotta al posto delle uova.</span></p></div>
+    <div class="meal"><h3>Spuntino</h3><p><span class="qty">30 g Grana</span>.<span class="alt">2ª scelta: fondente + mandorle.</span></p></div>
+    <div class="meal"><h3>Cena</h3><p><span class="qty">180 g pollo</span> + <span class="qty">200 g patate dolci</span> pesate a crudo + spinaci + EVO.<span class="alt">2ª scelta: 180 g salmone; broccoli o carote al posto degli spinaci.</span></p></div>
+  </section>
+
+  <section class="day" id="gio"><h2>Giovedì <span class="badge off">OFF</span></h2>
+    <div class="meal"><h3>Colazione</h3><p><span class="qty">~200 g Skyr / yogurt greco proteico</span> + <span class="qty">100 g mirtilli</span> + <span class="qty">40 g Familia Nature Crunch</span> + 3–4 noci o mandorle.</p></div>
+    <div class="meal"><h3>Pranzo</h3><p><span class="qty">2 uova</span> + verdure + <span class="qty">1 cucchiaio EVO</span> + <span class="qty">50–60 g pasta/riso integrale</span> + <span class="qty">1 arancia o 2 mandarini</span>.<span class="alt">Alternative: 130–150 g cottage/ricotta o tonno; 2–3 gallette o pane integrale; kiwi o mela.</span></p></div>
+    <div class="meal"><h3>Spuntino</h3><p><span class="qty">30 g Grana</span>.<span class="alt">2ª scelta: 1/2 avocado.</span></p></div>
+    <div class="meal"><h3>Cena</h3><p><span class="qty">150–180 g tacchino</span> + finocchi e/o insalata + EVO.<span class="alt">2ª scelta: pollo oppure orata/spigola. Niente pane o patate dolci.</span></p></div>
+  </section>
+
+  <section class="day" id="ven"><h2>Venerdì <span class="badge on">ALLENAMENTO</span></h2><div class="meta">Cena fuori</div>
+    <div class="meal"><h3>Colazione</h3><p><span class="qty">~200 g Skyr / yogurt greco proteico</span> + <span class="qty">100 g mirtilli</span> + <span class="qty">60 g Familia Nature Crunch</span> + <span class="qty">4 noci</span>.</p></div>
+    <div class="meal"><h3>Pranzo</h3><p><span class="qty">100 g pasta</span> + <span class="qty">2 uova</span> + zucchine/carote + <span class="qty">1 banana</span>.<span class="alt">2ª scelta: 100 g riso; 120 g ricotta.</span></p></div>
+    <div class="meal"><h3>Spuntino</h3><p><span class="qty">30 g Grana</span>.<span class="alt">2ª scelta: fondente + mandorle.</span></p></div>
+    <div class="meal"><h3>Cena</h3><p><b>Fuori.</b> Preferire carne o pesce + verdure; limitare i dolci senza rigidità.</p></div>
+  </section>
+
+  <section class="day" id="sab"><h2>Sabato <span class="badge off">OFF</span></h2><div class="meta">Cena fuori</div>
+    <div class="meal"><h3>Colazione</h3><p><span class="qty">~200 g Skyr / yogurt greco proteico</span> + <span class="qty">100 g mirtilli</span> + <span class="qty">40 g Familia Nature Crunch</span> + 3–4 noci o mandorle.</p></div>
+    <div class="meal"><h3>Pranzo</h3><p><span class="qty">130–150 g cottage/ricotta</span> + pomodori/insalata + <span class="qty">1 cucchiaio EVO</span> + <span class="qty">50–60 g pasta/riso integrale</span> + <span class="qty">1 mela o pera</span>.<span class="alt">Alternative: 2 uova o tonno; 2–3 gallette o pane integrale; kiwi o frutti di bosco.</span></p></div>
+    <div class="meal"><h3>Spuntino</h3><p><span class="qty">30 g Grana</span>.<span class="alt">2ª scelta: 1/2 avocado.</span></p></div>
+    <div class="meal"><h3>Cena</h3><p><b>Fuori.</b> Preferire carne o pesce + verdure.</p></div>
+  </section>
+
+  <section class="day" id="dom"><h2>Domenica <span class="badge off">OFF</span></h2>
+    <div class="meal"><h3>Colazione</h3><p><span class="qty">~200 g Skyr / yogurt greco proteico</span> + <span class="qty">100 g mirtilli</span> + <span class="qty">40 g Familia Nature Crunch</span> + 3–4 noci o mandorle.</p></div>
+    <div class="meal"><h3>Pranzo</h3><p><span class="qty">2 uova</span> + verdure + <span class="qty">1 cucchiaio EVO</span> + <span class="qty">50–60 g pasta/riso integrale</span> + frutta di stagione.<span class="alt">Alternative proteine: 130–150 g cottage/ricotta o tonno.</span></p></div>
+    <div class="meal"><h3>Spuntino</h3><p><span class="qty">30 g Grana</span>.<span class="alt">2ª scelta: 1/2 avocado.</span></p></div>
+    <div class="meal"><h3>Cena</h3><p><span class="qty">150–180 g carne magra o pesce</span> + verdure miste + EVO.<span class="alt">2ª scelta: pollo/tacchino. Niente pane o patate dolci.</span></p></div>
+  </section>
+
+  <section class="card" id="notePiano"><h2>Note pratiche</h2><div class="small">
+    <p><b>Skyr/yogurt:</b> circa 200 g, marca variabile, naturale e proteico.</p>
+    <p><b>Nature Crunch:</b> 60 g nei giorni ON, 40 g nei giorni OFF. <b>Mirtilli:</b> 100 g tutti i giorni.</p>
+    <p><b>Pasta/riso e patate dolci:</b> pesi a crudo. Patate dolci: 200 g nelle cene ON.</p>
+    <p><b>Frutta OFF:</b> alternare kiwi, agrumi, mela, pera, frutti di bosco e frutta di stagione.</p>
+    <p><b>Cena fuori variabile:</b> una sera tra martedì e mercoledì. Se coincide con mercoledì, salta la cena ON prevista a casa.</p>
+  </div></section>
+</main>
+
+<main id="spesa" class="view">
+  <div class="card hero"><h2>Lista della spesa intelligente</h2><p>Tre spese a settimana, confezioni realistiche, meno sprechi.</p></div>
+  <div class="controls"><button onclick="clearAll()">Azzera spunte</button><button onclick="document.getElementById('scorte').scrollIntoView({behavior:'smooth'})">Vai alle scorte</button></div>
+
+  <section class="card"><h2>Spesa 1 — Domenica/Lunedì</h2><div class="meta">Base per lunedì, martedì e mercoledì</div>
+    <div class="section"><h3>Colazioni</h3>
+      <div class="item"><input id="s1a" type="checkbox"><label for="s1a">Skyr/yogurt greco proteico <span class="qty">~600 g</span><span class="note">Circa 200 g per colazione.</span></label></div>
+      <div class="item"><input id="s1b" type="checkbox"><label for="s1b">Mirtilli <span class="qty">~300 g</span></label></div>
+    </div>
+    <div class="section"><h3>Frutta</h3>
+      <div class="item"><input id="s1c" type="checkbox"><label for="s1c">Banane <span class="qty">piccolo casco 4–5</span></label></div>
+      <div class="item"><input id="s1d" type="checkbox"><label for="s1d">Una sola frutta OFF per la settimana<span class="note">Retina agrumi oppure 4 kiwi oppure 4 mele/pere.</span></label></div>
+    </div>
+    <div class="section"><h3>Proteine e freschi</h3>
+      <div class="item"><input id="s1e" type="checkbox"><label for="s1e">Uova <span class="qty">confezione da 6</span></label></div>
+      <div class="item"><input id="s1f" type="checkbox"><label for="s1f">Ricotta/cottage <span class="qty">150–200 g</span></label></div>
+      <div class="item"><input id="s1g" type="checkbox"><label for="s1g">Salmone o pollo <span class="qty">1–2 porzioni da ~180 g</span></label></div>
+      <div class="item"><input id="s1h" type="checkbox"><label for="s1h">Patate dolci <span class="qty">400–600 g</span></label></div>
+    </div>
+    <div class="section"><h3>Verdure</h3>
+      <div class="item"><input id="s1i" type="checkbox"><label for="s1i">Zucchine <span class="qty">3–4</span></label></div>
+      <div class="item"><input id="s1j" type="checkbox"><label for="s1j">Carote <span class="qty">1 sacchetto piccolo</span></label></div>
+      <div class="item"><input id="s1k" type="checkbox"><label for="s1k">Una verdura verde<span class="note">Broccoli oppure spinaci oppure fagiolini.</span></label></div>
+      <div class="item"><input id="s1l" type="checkbox"><label for="s1l">Pomodori <span class="qty">1 confezione</span></label></div>
+    </div>
+    <div class="meta"><span class="badge out">Mar/Mer</span>Una sola delle due cene è a casa.</div>
+  </section>
+
+  <section class="card"><h2>Spesa 2 — Mercoledì/Giovedì</h2><div class="meta">Reintegro per giovedì e venerdì</div>
+    <div class="item"><input id="s2a" type="checkbox"><label for="s2a">Skyr/yogurt greco proteico <span class="qty">400–600 g</span></label></div>
+    <div class="item"><input id="s2b" type="checkbox"><label for="s2b">Mirtilli <span class="qty">200–300 g</span></label></div>
+    <div class="item"><input id="s2c" type="checkbox"><label for="s2c">Frutta OFF<span class="note">Reintegra solo quella scelta nella Spesa 1.</span></label></div>
+    <div class="item"><input id="s2d" type="checkbox"><label for="s2d">Proteina per giovedì sera <span class="qty">150–180 g</span></label></div>
+    <div class="item"><input id="s2e" type="checkbox"><label for="s2e">Ricotta/cottage/tonno <span class="qty">1 confezione</span></label></div>
+    <div class="item"><input id="s2f" type="checkbox"><label for="s2f">Reintegra <span class="qty">1–2 verdure</span></label></div>
+    <div class="item"><input id="s2g" type="checkbox"><label for="s2g">Insalata piccola solo se la userai entro 1–2 giorni</label></div>
+    <div class="meta"><span class="badge out">Venerdì sera</span>Nessuna spesa per la cena.</div>
+  </section>
+
+  <section class="card"><h2>Spesa 3 — Venerdì/Sabato</h2><div class="meta">Sabato, domenica e ponte verso lunedì</div>
+    <div class="item"><input id="s3a" type="checkbox"><label for="s3a">Skyr/yogurt greco proteico <span class="qty">400–600 g</span></label></div>
+    <div class="item"><input id="s3b" type="checkbox"><label for="s3b">Mirtilli <span class="qty">200–300 g</span></label></div>
+    <div class="item"><input id="s3c" type="checkbox"><label for="s3c">Frutta OFF<span class="note">Continua con lo stesso tipo della settimana.</span></label></div>
+    <div class="item"><input id="s3d" type="checkbox"><label for="s3d">Banane<span class="note">Reintegra solo se non ne resta 1 per lunedì.</span></label></div>
+    <div class="item"><input id="s3e" type="checkbox"><label for="s3e">Proteina domenica sera <span class="qty">150–180 g</span></label></div>
+    <div class="item"><input id="s3f" type="checkbox"><label for="s3f">Eventuale proteina lunedì <span class="qty">~180 g</span></label></div>
+    <div class="item"><input id="s3g" type="checkbox"><label for="s3g">Verdure <span class="qty">2 tipi</span></label></div>
+    <div class="item"><input id="s3h" type="checkbox"><label for="s3h">Controlla <span class="qty">200 g patate dolci</span></label></div>
+    <div class="item"><input id="s3i" type="checkbox"><label for="s3i">Controlla <span class="qty">almeno 1 banana</span></label></div>
+    <div class="item"><input id="s3j" type="checkbox"><label for="s3j">Controlla uova e yogurt</label></div>
+    <div class="meta"><span class="badge out">Sabato sera</span>Nessuna spesa per la cena.</div>
+  </section>
+
+  <section class="card" id="scorte"><h2>Controlla prima di comprare</h2>
+    <div class="item"><input id="p1" type="checkbox"><label for="p1">Familia Nature Crunch <span class="qty">~340 g/settimana</span></label></div>
+    <div class="item"><input id="p2" type="checkbox"><label for="p2">Pasta e riso</label></div>
+    <div class="item"><input id="p3" type="checkbox"><label for="p3">Olio EVO</label></div>
+    <div class="item"><input id="p4" type="checkbox"><label for="p4">Grana Padano <span class="qty">200–300 g</span></label></div>
+    <div class="item"><input id="p5" type="checkbox"><label for="p5">Noci e mandorle</label></div>
+    <div class="item"><input id="p6" type="checkbox"><label for="p6">Cioccolato fondente &gt;85%</label></div>
+    <div class="item"><input id="p7" type="checkbox"><label for="p7">Gallette / pane integrale</label></div>
+  </section>
+</main>
+</div>
+
+<script>
+function showView(name){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById(name).classList.add('active');
+  document.getElementById('tabPiano').classList.toggle('active',name==='piano');
+  document.getElementById('tabSpesa').classList.toggle('active',name==='spesa');
+  localStorage.setItem('alimentazione_view',name);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+const boxes=[...document.querySelectorAll('input[type=checkbox]')];
+function save(){boxes.forEach(b=>localStorage.setItem('shop_'+b.id,b.checked?'1':'0'))}
+function clearAll(){boxes.forEach(b=>b.checked=false);save()}
+boxes.forEach(b=>{b.checked=localStorage.getItem('shop_'+b.id)==='1';b.addEventListener('change',save)});
+const saved=localStorage.getItem('alimentazione_view'); if(saved) showView(saved);
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js'))}
+</script>
+</body>
+</html>
