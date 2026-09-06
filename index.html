@@ -46,7 +46,7 @@ h1{font-size:25px;margin:2px 0 4px}.sub{font-size:13px;color:var(--muted)}
 .shop-category{overflow:hidden}.shop-category h2{font-size:18px;margin:0;padding:13px 14px;background:#fafafa;border-bottom:1px solid var(--line)}
 .shop-category .tip{font-size:12px;color:var(--muted);padding:9px 14px;border-bottom:1px solid var(--line);line-height:1.4}
 .shop-item{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:9px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line)}
-.shop-item:last-child{border-bottom:none}.shop-item.hidden{display:none}
+.shop-item:last-child{border-bottom:none}.shop-item.hidden{display:none}.shop-item.selected{background:#f5f8ff}
 .shop-item input{width:22px;height:22px;margin:0;accent-color:var(--accent)}
 .shop-name{font-size:15px;font-weight:650;line-height:1.3}.shop-detail{font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.35}
 .nutri{display:grid;grid-template-columns:repeat(4,7px);gap:3px;min-width:37px}
@@ -122,7 +122,7 @@ h1{font-size:25px;margin:2px 0 4px}.sub{font-size:13px;color:var(--muted)}
 </main>
 
 <main id="spesa" class="view">
-<div class="card hero"><h2>Lista della spesa</h2><p>Lista unica completa, divisa per categoria. Spunta ciò che hai già preso.</p></div>
+<div class="card hero"><h2>Lista della spesa</h2><p>Lista unica completa, divisa per categoria. Spunta gli alimenti che devi comprare.</p></div>
 <div class="controls">
 <button id="onlyMissingBtn" onclick="toggleOnlyMissing()">Mostra solo da comprare</button>
 <button onclick="clearAll()">Azzera spunte</button>
@@ -233,12 +233,41 @@ function showView(name){
 }
 const boxes=[...document.querySelectorAll('#spesa input[type=checkbox]')];
 function saveChecks(){boxes.forEach(b=>localStorage.setItem('shop2_'+b.id,b.checked?'1':'0'))}
-boxes.forEach(b=>{b.checked=localStorage.getItem('shop2_'+b.id)==='1';b.addEventListener('change',()=>{saveChecks();applyOnlyMissing()})});
-function clearAll(){boxes.forEach(b=>b.checked=false);saveChecks();applyOnlyMissing()}
+boxes.forEach(b=>{
+ b.checked=localStorage.getItem('shop2_'+b.id)==='1';
+ b.addEventListener('change',()=>{saveChecks();applyOnlyMissing()});
+});
+function clearAll(){
+ boxes.forEach(b=>b.checked=false);
+ saveChecks();
+ applyOnlyMissing();
+}
 let onlyMissing=localStorage.getItem('alimentazione_only_missing')==='1';
-function toggleOnlyMissing(){onlyMissing=!onlyMissing;localStorage.setItem('alimentazione_only_missing',onlyMissing?'1':'0');updateOnlyMissingButton();applyOnlyMissing()}
-function updateOnlyMissingButton(){const b=document.getElementById('onlyMissingBtn');b.classList.toggle('active',onlyMissing);b.textContent=onlyMissing?'Mostro solo da comprare':'Mostra solo da comprare'}
-function applyOnlyMissing(){document.querySelectorAll('.shop-item').forEach(row=>{const cb=row.querySelector('input');if(cb)row.classList.toggle('hidden',onlyMissing&&cb.checked)})}
+function toggleOnlyMissing(){
+ onlyMissing=!onlyMissing;
+ localStorage.setItem('alimentazione_only_missing',onlyMissing?'1':'0');
+ updateOnlyMissingButton();
+ applyOnlyMissing();
+}
+function updateOnlyMissingButton(){
+ const b=document.getElementById('onlyMissingBtn');
+ b.classList.toggle('active',onlyMissing);
+ b.textContent=onlyMissing?'Mostro solo da comprare':'Mostra solo da comprare';
+}
+function applyOnlyMissing(){
+ document.querySelectorAll('.shop-item').forEach(row=>{
+   const cb=row.querySelector('input[type=checkbox]');
+   if(!cb) return;
+   row.classList.toggle('selected', cb.checked);
+   // Le spunte indicano "da comprare": in modalità filtro mostriamo SOLO gli elementi spuntati.
+   row.classList.toggle('hidden', onlyMissing && !cb.checked);
+ });
+ // Se il filtro è attivo, nascondi anche le categorie senza alcun alimento selezionato.
+ document.querySelectorAll('.shop-category').forEach(cat=>{
+   const hasVisible=[...cat.querySelectorAll('.shop-item')].some(r=>!r.classList.contains('hidden'));
+   cat.style.display=(onlyMissing && !hasVisible)?'none':'';
+ });
+}
 let showNutrients=localStorage.getItem('alimentazione_nutrients')!=='0';
 function toggleNutrients(){showNutrients=!showNutrients;localStorage.setItem('alimentazione_nutrients',showNutrients?'1':'0');updateNutrients()}
 function updateNutrients(){document.getElementById('spesa').classList.toggle('hide-nutrients',!showNutrients);const b=document.getElementById('nutriBtn');b.classList.toggle('active',showNutrients);b.textContent=showNutrients?'Indicatori nutrienti: ON':'Indicatori nutrienti: OFF'}
