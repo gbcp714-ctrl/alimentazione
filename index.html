@@ -54,6 +54,8 @@ h1{font-size:25px;margin:2px 0 4px}.sub{font-size:13px;color:var(--muted)}
 .nutri .p.on{background:var(--protein)}.nutri .c.on{background:var(--carb)}.nutri .g.on{background:var(--fat)}.nutri .f.on{background:var(--fiber)}
 .hide-nutrients .nutri{display:none}.small{font-size:14px;line-height:1.5;color:#374151}.footer-note{font-size:12.5px;color:var(--muted);line-height:1.45;margin:14px 2px}
 
+.choice{display:inline-flex;gap:4px;margin-left:6px;vertical-align:middle}.choice button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:700;text-transform:none;letter-spacing:0}.choice button.active{background:#111827;color:#fff;border-color:#111827}
+.alt.inactive{opacity:.75}.meal p.chosen-alt{opacity:.45}
 /* Cruscotto nutrizionale */
 .week-settings{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin:12px 0}
 .week-settings h2{font-size:18px;margin:0 0 6px}
@@ -96,11 +98,11 @@ h1{font-size:25px;margin:2px 0 4px}.sub{font-size:13px;color:var(--muted)}
 </header>
 
 <main id="piano" class="view active">
-<div class="card hero"><h2>Piano alimentare settimanale</h2><p>Calisthenics lunedì, mercoledì e venerdì. Le seconde scelte sostituiscono la prima scelta: non vanno sommate.</p></div>
+<div class="card hero"><h2>Piano alimentare settimanale</h2><p>Calisthenics lunedì, mercoledì e venerdì. Le seconde scelte sostituiscono la prima scelta: non vanno sommate. Tocca «1ª / 2ª scelta» in ogni pasto per aggiornare il totale.</p></div>
 <div class="nav"><a href="#lun">Lun</a><a href="#mar">Mar</a><a href="#mer">Mer</a><a href="#gio">Gio</a><a href="#ven">Ven</a><a href="#sab">Sab</a><a href="#dom">Dom</a><a href="#notePiano">Note</a></div>
 <div class="week-settings">
   <h2>Calcolo nutrizionale</h2>
-  <div class="small">I valori sono stime basate sulla <b>prima scelta</b> del piano e sulle tue quantità abituali.</div>
+  <div class="small">I valori sono stime calcolate sulle scelte selezionate in ogni pasto.</div>
 
   <div class="setting-label">Extra quotidiano</div>
   <div class="choice-row">
@@ -112,67 +114,32 @@ h1{font-size:25px;margin:2px 0 4px}.sub{font-size:13px;color:var(--muted)}
   <div class="choice-row">
     <button id="dinnerMar" onclick="setVariableDinner('mar')">Martedì</button>
     <button id="dinnerMer" onclick="setVariableDinner('mer')">Mercoledì</button>
+    <button id="dinnerNone" onclick="setVariableDinner('none')">Nessuna</button>
   </div>
 
   <div class="calc-note">
-    Riferimenti usati: yogurt greco/Skyr 200 g con almeno 9–10 g proteine/100 g; 
-    1 cucchiaio EVO a pranzo + 1 a cena; circa mezza fondina di verdure a pranzo e cena.
-    Venerdì e sabato il totale è calcolato <b>prima della cena fuori</b>.
+    I totali sono calcolati automaticamente da una tabella di valori per 100 g (crudo) e seguono la scelta (1ª o 2ª) selezionata in ogni pasto.
+    Le cene fuori sono conteggiate con una <b>stima</b> di ~800 kcal e 40 g di proteine.
+    Obiettivo: ~2300–2400 kcal nei giorni di allenamento, ~2100–2200 nei giorni OFF, 120–140 g di proteine.
   </div>
 </div>
 
 
-<section class="day" id="lun"><h2>Lunedì <span class="badge on">ALLENAMENTO</span></h2><div class="meta">Allenamento circa 10:00/10:30–12:00</div>
-<div class="meal"><h3>Colazione · 08:00–09:00</h3><p><span class="qty">~200 g Skyr / yogurt greco proteico</span> + <span class="qty">100 g mirtilli</span> + <span class="qty">60 g Familia Nature Crunch</span> + <span class="qty">4 noci</span>.</p></div>
-<div class="meal"><h3>Pranzo · 12:30</h3><p><span class="qty">100 g pasta normale</span> + <span class="qty">2 uova</span> + zucchine o carote + <span class="qty">1 banana</span>.<span class="alt">2ª scelta: 100 g riso; 120 g ricotta al posto delle uova.</span></p></div>
-<div class="meal"><h3>Spuntino</h3><p><span class="qty">30 g Grana Padano</span>.<span class="alt">2ª scelta: 1 quadratino di fondente + una manciata di mandorle.</span></p></div>
-<div class="meal"><h3>Cena</h3><p><span class="qty">180 g salmone</span> + <span class="qty">200 g patate dolci</span> a crudo + broccoli + EVO.<span class="alt">2ª scelta: 180 g pollo; fagiolini o zucchine.</span></p></div><div class="nutrition-panel" id="nutrition-lun"></div></section>
-
-<section class="day" id="mar"><h2>Martedì <span class="badge off">OFF</span></h2>
-<div class="meal"><h3>Colazione</h3><p><span class="qty">~200 g Skyr / yogurt greco proteico</span> + <span class="qty">100 g mirtilli</span> + <span class="qty">40 g Familia Nature Crunch</span> + 3–4 noci o mandorle.</p></div>
-<div class="meal"><h3>Pranzo</h3><p><span class="qty">130–150 g cottage/ricotta</span> + verdure + <span class="qty">1 cucchiaio EVO</span> + <span class="qty">50–60 g pasta/riso integrale</span> + frutta OFF.<span class="alt">Alternative: 2 uova o tonno; 2–3 gallette o pane integrale.</span></p></div>
-<div class="meal"><h3>Spuntino</h3><p><span class="qty">30 g Grana</span>.<span class="alt">2ª scelta: 1/2 avocado.</span></p></div>
-<div class="meal"><h3>Cena</h3><p><span class="qty">150–180 g pollo</span> + verdure + EVO.<span class="alt">2ª scelta: tacchino o pesce magro. Niente pane o patate dolci.</span></p></div><div class="nutrition-panel" id="nutrition-mar"></div></section>
-
-<section class="day" id="mer"><h2>Mercoledì <span class="badge on">ALLENAMENTO</span></h2><div class="meta">Allenamento circa 10:00/10:30–12:00</div>
-<div class="meal"><h3>Colazione</h3><p><span class="qty">~200 g Skyr</span> + <span class="qty">100 g mirtilli</span> + <span class="qty">60 g Nature Crunch</span> + <span class="qty">4 noci</span>.</p></div>
-<div class="meal"><h3>Pranzo</h3><p><span class="qty">100 g riso</span> + <span class="qty">2 uova</span> + verdure + <span class="qty">1 banana</span>.<span class="alt">2ª scelta: 100 g pasta; 120 g ricotta.</span></p></div>
-<div class="meal"><h3>Spuntino</h3><p><span class="qty">30 g Grana</span>.<span class="alt">2ª scelta: fondente + mandorle.</span></p></div>
-<div class="meal"><h3>Cena</h3><p><span class="qty">180 g pollo</span> + <span class="qty">200 g patate dolci</span> + spinaci + EVO.<span class="alt">2ª scelta: 180 g salmone.</span></p></div><div class="nutrition-panel" id="nutrition-mer"></div></section>
-
-<section class="day" id="gio"><h2>Giovedì <span class="badge off">OFF</span></h2>
-<div class="meal"><h3>Colazione</h3><p><span class="qty">~200 g Skyr</span> + <span class="qty">100 g mirtilli</span> + <span class="qty">40 g Nature Crunch</span> + 3–4 noci o mandorle.</p></div>
-<div class="meal"><h3>Pranzo</h3><p><span class="qty">2 uova</span> + verdure + <span class="qty">1 cucchiaio EVO</span> + <span class="qty">50–60 g pasta/riso integrale</span> + frutta OFF.<span class="alt">Alternative: ricotta/cottage o tonno; gallette o pane integrale.</span></p></div>
-<div class="meal"><h3>Spuntino</h3><p><span class="qty">30 g Grana</span>.<span class="alt">2ª scelta: 1/2 avocado.</span></p></div>
-<div class="meal"><h3>Cena</h3><p><span class="qty">150–180 g tacchino</span> + verdure + EVO.<span class="alt">2ª scelta: pollo, orata o spigola. Niente pane o patate dolci.</span></p></div><div class="nutrition-panel" id="nutrition-gio"></div></section>
-
-<section class="day" id="ven"><h2>Venerdì <span class="badge on">ALLENAMENTO</span></h2><div class="meta">Cena fuori</div>
-<div class="meal"><h3>Colazione</h3><p><span class="qty">~200 g Skyr</span> + <span class="qty">100 g mirtilli</span> + <span class="qty">60 g Nature Crunch</span> + <span class="qty">4 noci</span>.</p></div>
-<div class="meal"><h3>Pranzo</h3><p><span class="qty">100 g pasta/riso</span> + <span class="qty">2 uova</span> + verdure + <span class="qty">1 banana</span>.<span class="alt">2ª scelta proteica: 120 g ricotta.</span></p></div>
-<div class="meal"><h3>Spuntino</h3><p><span class="qty">30 g Grana</span>.<span class="alt">2ª scelta: fondente + mandorle.</span></p></div>
-<div class="meal"><h3>Cena</h3><p><b>Fuori.</b> Preferire carne o pesce + verdure.</p></div><div class="nutrition-panel" id="nutrition-ven"></div></section>
-
-<section class="day" id="sab"><h2>Sabato <span class="badge off">OFF</span></h2><div class="meta">Cena fuori</div>
-<div class="meal"><h3>Colazione</h3><p><span class="qty">~200 g Skyr</span> + <span class="qty">100 g mirtilli</span> + <span class="qty">40 g Nature Crunch</span> + 3–4 noci o mandorle.</p></div>
-<div class="meal"><h3>Pranzo</h3><p><span class="qty">130–150 g cottage/ricotta</span> + verdure + <span class="qty">1 cucchiaio EVO</span> + <span class="qty">50–60 g pasta/riso integrale</span> + frutta OFF.<span class="alt">Alternative: 2 uova o tonno; gallette o pane integrale.</span></p></div>
-<div class="meal"><h3>Spuntino</h3><p><span class="qty">30 g Grana</span>.<span class="alt">2ª scelta: 1/2 avocado.</span></p></div>
-<div class="meal"><h3>Cena</h3><p><b>Fuori.</b> Preferire carne o pesce + verdure.</p></div><div class="nutrition-panel" id="nutrition-sab"></div></section>
-
-<section class="day" id="dom"><h2>Domenica <span class="badge off">OFF</span></h2>
-<div class="meal"><h3>Colazione</h3><p><span class="qty">~200 g Skyr</span> + <span class="qty">100 g mirtilli</span> + <span class="qty">40 g Nature Crunch</span> + 3–4 noci o mandorle.</p></div>
-<div class="meal"><h3>Pranzo</h3><p><span class="qty">2 uova</span> + verdure + <span class="qty">1 cucchiaio EVO</span> + <span class="qty">50–60 g pasta/riso integrale</span> + frutta OFF.<span class="alt">Alternative: ricotta/cottage o tonno.</span></p></div>
-<div class="meal"><h3>Spuntino</h3><p><span class="qty">30 g Grana</span>.<span class="alt">2ª scelta: 1/2 avocado.</span></p></div>
-<div class="meal"><h3>Cena</h3><p><span class="qty">150–180 g carne magra o pesce</span> + verdure + EVO.<span class="alt">2ª scelta: pollo/tacchino. Niente pane o patate dolci.</span></p></div><div class="nutrition-panel" id="nutrition-dom"></div></section>
-
+<section class="day" id="lun"><h2>Lunedì <span class="badge"></span></h2><div class="meta"></div><div class="meals"></div><div class="nutrition-panel" id="nutrition-lun"></div></section>
+<section class="day" id="mar"><h2>Martedì <span class="badge"></span></h2><div class="meta"></div><div class="meals"></div><div class="nutrition-panel" id="nutrition-mar"></div></section>
+<section class="day" id="mer"><h2>Mercoledì <span class="badge"></span></h2><div class="meta"></div><div class="meals"></div><div class="nutrition-panel" id="nutrition-mer"></div></section>
+<section class="day" id="gio"><h2>Giovedì <span class="badge"></span></h2><div class="meta"></div><div class="meals"></div><div class="nutrition-panel" id="nutrition-gio"></div></section>
+<section class="day" id="ven"><h2>Venerdì <span class="badge"></span></h2><div class="meta"></div><div class="meals"></div><div class="nutrition-panel" id="nutrition-ven"></div></section>
+<section class="day" id="sab"><h2>Sabato <span class="badge"></span></h2><div class="meta"></div><div class="meals"></div><div class="nutrition-panel" id="nutrition-sab"></div></section>
+<section class="day" id="dom"><h2>Domenica <span class="badge"></span></h2><div class="meta"></div><div class="meals"></div><div class="nutrition-panel" id="nutrition-dom"></div></section>
 <section class="card" id="notePiano"><h2>Note pratiche</h2><div class="small">
-<p><b>Skyr/yogurt:</b> circa 200 g, naturale, con almeno 9–10 g di proteine per 100 g.</p>
-<p><b>Nature Crunch:</b> 60 g ON, 40 g OFF. <b>Mirtilli:</b> 100 g tutti i giorni.</p>
-<p><b>Pasta/riso e patate dolci:</b> pesi a crudo.</p>
-<p><b>Olio EVO:</b> nel calcolo nutrizionale è considerato 1 cucchiaio da minestra a pranzo e 1 a cena.</p>
-<p><b>Verdure:</b> nel calcolo è considerata circa mezza fondina sia a pranzo sia a cena.</p>
-<p><b>Frutta secca extra:</b> ogni giorno vengono conteggiate 10 mandorle oppure 10 macadamia, in aggiunta a quanto già previsto dal piano.</p>
-<p><b>Cena fuori variabile:</b> una sera tra martedì e mercoledì; selezionala nel cruscotto per aggiornare il totale.</p>
-<p><b>Importante:</b> i valori sono stime e per ora si riferiscono alla prima scelta di ciascun pasto; le seconde scelte verranno rese interattive in un passaggio successivo.</p>
+<p><b>Skyr/yogurt:</b> 250 g al giorno, naturale, con almeno 10 g di proteine per 100 g.</p>
+<p><b>Pasta, riso, patate e patate dolci:</b> pesi a crudo. <b>Uova:</b> 1 uovo ≈ 55 g; <b>albumi:</b> in brick, 100 g ≈ 3 albumi.</p>
+<p><b>Proteine a pranzo:</b> almeno 30–35 g (uova + albumi, tonno, fiocchi di latte o ricotta).</p>
+<p><b>Olio EVO:</b> 1 cucchiaio = 10 g. <b>Verdure:</b> ½ fondina ≈ 150 g a pranzo e a cena.</p>
+<p><b>Frutta secca extra:</b> ogni giorno 10 mandorle oppure 10 macadamia, in aggiunta al piano.</p>
+<p><b>Cena fuori:</b> venerdì, sabato e una sera tra martedì e mercoledì (selezionala nel cruscotto). Conteggiata come stima di ~800 kcal e 40 g di proteine: preferire carne o pesce + verdure.</p>
+<p><b>Importante:</b> i valori sono stime basate su tabelle nutrizionali medie; per la granola verificare l'etichetta.</p>
 </div></section>
 </main>
 
@@ -195,14 +162,15 @@ h1{font-size:25px;margin:2px 0 4px}.sub{font-size:13px;color:var(--muted)}
 </details>
 
 <section class="shop-category"><h2>🥛 Yogurt e latticini</h2>
-<div class="shop-item"><input id="yogurt" type="checkbox"><div><div class="shop-name">Skyr / yogurt greco naturale proteico</div><div class="shop-detail">Circa 200 g al giorno · marca e formato liberi</div></div><div class="nutri"><span class="p on"></span><span class="c"></span><span class="g"></span><span class="f"></span></div></div>
-<div class="shop-item"><input id="ricotta" type="checkbox"><div><div class="shop-name">Ricotta</div><div class="shop-detail">120 g ON oppure 130–150 g OFF</div></div><div class="nutri"><span class="p on"></span><span class="c"></span><span class="g on"></span><span class="f"></span></div></div>
-<div class="shop-item"><input id="cottage" type="checkbox"><div><div class="shop-name">Cottage cheese</div><div class="shop-detail">130–150 g nei pranzi OFF</div></div><div class="nutri"><span class="p on"></span><span class="c"></span><span class="g"></span><span class="f"></span></div></div>
+<div class="shop-item"><input id="yogurt" type="checkbox"><div><div class="shop-name">Skyr / yogurt greco naturale proteico</div><div class="shop-detail">250 g al giorno · marca e formato liberi</div></div><div class="nutri"><span class="p on"></span><span class="c"></span><span class="g"></span><span class="f"></span></div></div>
+<div class="shop-item"><input id="ricotta" type="checkbox"><div><div class="shop-name">Ricotta</div><div class="shop-detail">150 g (2ª scelta pranzo)</div></div><div class="nutri"><span class="p on"></span><span class="c"></span><span class="g on"></span><span class="f"></span></div></div>
+<div class="shop-item"><input id="cottage" type="checkbox"><div><div class="shop-name">Cottage / fiocchi di latte</div><div class="shop-detail">150–200 g a pranzo</div></div><div class="nutri"><span class="p on"></span><span class="c"></span><span class="g"></span><span class="f"></span></div></div>
 <div class="shop-item"><input id="grana" type="checkbox"><div><div class="shop-name">Grana Padano</div><div class="shop-detail">30 g per spuntino</div></div><div class="nutri"><span class="p on"></span><span class="c"></span><span class="g on"></span><span class="f"></span></div></div>
 </section>
 
 <section class="shop-category"><h2>🥚 Uova</h2>
 <div class="shop-item"><input id="uova" type="checkbox"><div><div class="shop-name">Uova</div><div class="shop-detail">2 per porzione · confezione da 6</div></div><div class="nutri"><span class="p on"></span><span class="c"></span><span class="g on"></span><span class="f"></span></div></div>
+<div class="shop-item"><input id="albumi" type="checkbox"><div><div class="shop-name">Albumi in brick</div><div class="shop-detail">100 g per porzione, insieme alle uova</div></div><div class="nutri"><span class="p on"></span><span class="c"></span><span class="g"></span><span class="f"></span></div></div>
 </section>
 
 <section class="shop-category"><h2>🐟 Pesce</h2><div class="tip">Scegli 2–3 tipi per settimana; prova a includere almeno 2 pasti di pesce grasso.</div>
@@ -213,7 +181,7 @@ h1{font-size:25px;margin:2px 0 4px}.sub{font-size:13px;color:var(--muted)}
 <div class="shop-item"><input id="merluzzo" type="checkbox"><div><div class="shop-name">Merluzzo</div><div class="shop-detail">150–180 g</div></div><div class="nutri"><span class="p on"></span><span class="c"></span><span class="g"></span><span class="f"></span></div></div>
 <div class="shop-item"><input id="sgombro" type="checkbox"><div><div class="shop-name">Sgombro</div><div class="shop-detail">150–180 g</div></div><div class="nutri"><span class="p on"></span><span class="c"></span><span class="g on"></span><span class="f"></span></div></div>
 <div class="shop-item"><input id="sardine" type="checkbox"><div><div class="shop-name">Sardine</div><div class="shop-detail">150–180 g</div></div><div class="nutri"><span class="p on"></span><span class="c"></span><span class="g on"></span><span class="f"></span></div></div>
-<div class="shop-item"><input id="tonno" type="checkbox"><div><div class="shop-name">Tonno al naturale</div><div class="shop-detail">Alternativa proteica nei pranzi OFF</div></div><div class="nutri"><span class="p on"></span><span class="c"></span><span class="g"></span><span class="f"></span></div></div>
+<div class="shop-item"><input id="tonno" type="checkbox"><div><div class="shop-name">Tonno al naturale</div><div class="shop-detail">80–120 g sgocciolato a pranzo</div></div><div class="nutri"><span class="p on"></span><span class="c"></span><span class="g"></span><span class="f"></span></div></div>
 </section>
 
 <section class="shop-category"><h2>🍗 Carne</h2><div class="tip">Sono alternative: normalmente scegli 1–2 tipi per settimana.</div>
@@ -229,17 +197,18 @@ h1{font-size:25px;margin:2px 0 4px}.sub{font-size:13px;color:var(--muted)}
 <div class="shop-item"><input id="avena" type="checkbox"><div><div class="shop-name">Fiocchi d’avena integrali</div><div class="shop-detail">Alternativa soprattutto nei giorni OFF</div></div><div class="nutri"><span class="p"></span><span class="c on"></span><span class="g"></span><span class="f on"></span></div></div>
 <div class="shop-item"><input id="pasta" type="checkbox"><div><div class="shop-name">Pasta normale</div><div class="shop-detail">100 g nei giorni ON</div></div><div class="nutri"><span class="p"></span><span class="c on"></span><span class="g"></span><span class="f"></span></div></div>
 <div class="shop-item"><input id="riso" type="checkbox"><div><div class="shop-name">Riso</div><div class="shop-detail">100 g nei giorni ON</div></div><div class="nutri"><span class="p"></span><span class="c on"></span><span class="g"></span><span class="f"></span></div></div>
-<div class="shop-item"><input id="pastaInt" type="checkbox"><div><div class="shop-name">Pasta integrale</div><div class="shop-detail">50–60 g nei giorni OFF</div></div><div class="nutri"><span class="p"></span><span class="c on"></span><span class="g"></span><span class="f on"></span></div></div>
-<div class="shop-item"><input id="risoInt" type="checkbox"><div><div class="shop-name">Riso integrale</div><div class="shop-detail">50–60 g nei giorni OFF</div></div><div class="nutri"><span class="p"></span><span class="c on"></span><span class="g"></span><span class="f on"></span></div></div>
-<div class="shop-item"><input id="patateDolci" type="checkbox"><div><div class="shop-name">Patate dolci</div><div class="shop-detail">200 g a crudo nelle cene ON a casa</div></div><div class="nutri"><span class="p"></span><span class="c on"></span><span class="g"></span><span class="f on"></span></div></div>
-<div class="shop-item"><input id="paneInt" type="checkbox"><div><div class="shop-name">Pane integrale</div><div class="shop-detail">Alternativa nei giorni OFF</div></div><div class="nutri"><span class="p"></span><span class="c on"></span><span class="g"></span><span class="f on"></span></div></div>
+<div class="shop-item"><input id="pastaInt" type="checkbox"><div><div class="shop-name">Pasta integrale</div><div class="shop-detail">70–90 g nei giorni OFF</div></div><div class="nutri"><span class="p"></span><span class="c on"></span><span class="g"></span><span class="f on"></span></div></div>
+<div class="shop-item"><input id="risoInt" type="checkbox"><div><div class="shop-name">Riso integrale</div><div class="shop-detail">70–90 g nei giorni OFF</div></div><div class="nutri"><span class="p"></span><span class="c on"></span><span class="g"></span><span class="f on"></span></div></div>
+<div class="shop-item"><input id="patateDolci" type="checkbox"><div><div class="shop-name">Patate dolci</div><div class="shop-detail">250–300 g a crudo nelle cene ON a casa</div></div><div class="nutri"><span class="p"></span><span class="c on"></span><span class="g"></span><span class="f on"></span></div></div>
+<div class="shop-item"><input id="patate" type="checkbox"><div><div class="shop-name">Patate</div><div class="shop-detail">250–300 g a crudo nelle cene OFF</div></div><div class="nutri"><span class="p"></span><span class="c on"></span><span class="g"></span><span class="f on"></span></div></div>
+<div class="shop-item"><input id="paneInt" type="checkbox"><div><div class="shop-name">Pane integrale</div><div class="shop-detail">40 g a cena / 80 g a pranzo (2ª scelta)</div></div><div class="nutri"><span class="p"></span><span class="c on"></span><span class="g"></span><span class="f on"></span></div></div>
 <div class="shop-item"><input id="galFarro" type="checkbox"><div><div class="shop-name">Gallette di farro</div><div class="shop-detail">2–3 come alternativa</div></div><div class="nutri"><span class="p"></span><span class="c on"></span><span class="g"></span><span class="f"></span></div></div>
 <div class="shop-item"><input id="galGrano" type="checkbox"><div><div class="shop-name">Gallette di grano saraceno</div><div class="shop-detail">2–3 come alternativa</div></div><div class="nutri"><span class="p"></span><span class="c on"></span><span class="g"></span><span class="f"></span></div></div>
 </section>
 
 <section class="shop-category"><h2>🍌 Frutta</h2><div class="tip">Mirtilli + banane sono la base. Oltre a questi scegli 1–2 tipi di frutta OFF per settimana.</div>
 <div class="shop-item"><input id="mirtilli" type="checkbox"><div><div class="shop-name">Mirtilli</div><div class="shop-detail">100 g ogni giorno</div></div><div class="nutri"><span class="p"></span><span class="c on"></span><span class="g"></span><span class="f on"></span></div></div>
-<div class="shop-item"><input id="banane" type="checkbox"><div><div class="shop-name">Banane</div><div class="shop-detail">1 nei giorni ON</div></div><div class="nutri"><span class="p"></span><span class="c on"></span><span class="g"></span><span class="f on"></span></div></div>
+<div class="shop-item"><input id="banane" type="checkbox"><div><div class="shop-name">Banane</div><div class="shop-detail">1 a pranzo nei giorni ON</div></div><div class="nutri"><span class="p"></span><span class="c on"></span><span class="g"></span><span class="f on"></span></div></div>
 <div class="shop-item"><input id="kiwi" type="checkbox"><div><div class="shop-name">Kiwi</div></div><div class="nutri"><span class="p"></span><span class="c on"></span><span class="g"></span><span class="f on"></span></div></div>
 <div class="shop-item"><input id="agrumi" type="checkbox"><div><div class="shop-name">Arance / mandarini</div></div><div class="nutri"><span class="p"></span><span class="c on"></span><span class="g"></span><span class="f on"></span></div></div>
 <div class="shop-item"><input id="mele" type="checkbox"><div><div class="shop-name">Mele</div></div><div class="nutri"><span class="p"></span><span class="c on"></span><span class="g"></span><span class="f on"></span></div></div>
@@ -256,7 +225,7 @@ h1{font-size:25px;margin:2px 0 4px}.sub{font-size:13px;color:var(--muted)}
 <div class="shop-item"><input id="zucchine" type="checkbox"><div><div class="shop-name">Zucchine</div></div><div class="nutri"><span class="p"></span><span class="c"></span><span class="g"></span><span class="f on"></span></div></div><div class="shop-item"><input id="carote" type="checkbox"><div><div class="shop-name">Carote</div></div><div class="nutri"><span class="p"></span><span class="c"></span><span class="g"></span><span class="f on"></span></div></div><div class="shop-item"><input id="pomodori" type="checkbox"><div><div class="shop-name">Pomodori</div></div><div class="nutri"><span class="p"></span><span class="c"></span><span class="g"></span><span class="f on"></span></div></div><div class="shop-item"><input id="broccoli" type="checkbox"><div><div class="shop-name">Broccoli</div></div><div class="nutri"><span class="p"></span><span class="c"></span><span class="g"></span><span class="f on"></span></div></div><div class="shop-item"><input id="cavolfiore" type="checkbox"><div><div class="shop-name">Cavolfiore</div></div><div class="nutri"><span class="p"></span><span class="c"></span><span class="g"></span><span class="f on"></span></div></div><div class="shop-item"><input id="spinaci" type="checkbox"><div><div class="shop-name">Spinaci</div></div><div class="nutri"><span class="p"></span><span class="c"></span><span class="g"></span><span class="f on"></span></div></div><div class="shop-item"><input id="bietole" type="checkbox"><div><div class="shop-name">Bietole</div></div><div class="nutri"><span class="p"></span><span class="c"></span><span class="g"></span><span class="f on"></span></div></div><div class="shop-item"><input id="peperoni" type="checkbox"><div><div class="shop-name">Peperoni</div></div><div class="nutri"><span class="p"></span><span class="c"></span><span class="g"></span><span class="f on"></span></div></div><div class="shop-item"><input id="melanzane" type="checkbox"><div><div class="shop-name">Melanzane</div></div><div class="nutri"><span class="p"></span><span class="c"></span><span class="g"></span><span class="f on"></span></div></div><div class="shop-item"><input id="finocchi" type="checkbox"><div><div class="shop-name">Finocchi</div></div><div class="nutri"><span class="p"></span><span class="c"></span><span class="g"></span><span class="f on"></span></div></div><div class="shop-item"><input id="asparagi" type="checkbox"><div><div class="shop-name">Asparagi</div></div><div class="nutri"><span class="p"></span><span class="c"></span><span class="g"></span><span class="f on"></span></div></div><div class="shop-item"><input id="fagiolini" type="checkbox"><div><div class="shop-name">Fagiolini</div></div><div class="nutri"><span class="p"></span><span class="c"></span><span class="g"></span><span class="f on"></span></div></div><div class="shop-item"><input id="insalata" type="checkbox"><div><div class="shop-name">Insalata</div></div><div class="nutri"><span class="p"></span><span class="c"></span><span class="g"></span><span class="f on"></span></div></div></section>
 
 <section class="shop-category"><h2>🥑 Frutta secca e grassi</h2>
-<div class="shop-item"><input id="noci" type="checkbox"><div><div class="shop-name">Noci</div><div class="shop-detail">4 ON / 3–4 OFF</div></div><div class="nutri"><span class="p on"></span><span class="c"></span><span class="g on"></span><span class="f on"></span></div></div>
+<div class="shop-item"><input id="noci" type="checkbox"><div><div class="shop-name">Noci</div><div class="shop-detail">3–4 a colazione</div></div><div class="nutri"><span class="p on"></span><span class="c"></span><span class="g on"></span><span class="f on"></span></div></div>
 <div class="shop-item"><input id="mandorle" type="checkbox"><div><div class="shop-name">Mandorle</div><div class="shop-detail">Piccola manciata</div></div><div class="nutri"><span class="p on"></span><span class="c"></span><span class="g on"></span><span class="f on"></span></div></div>
 <div class="shop-item"><input id="avocado" type="checkbox"><div><div class="shop-name">Avocado</div><div class="shop-detail">½ per spuntino</div></div><div class="nutri"><span class="p"></span><span class="c"></span><span class="g on"></span><span class="f on"></span></div></div>
 <div class="shop-item"><input id="evo" type="checkbox"><div><div class="shop-name">Olio extravergine di oliva</div></div><div class="nutri"><span class="p"></span><span class="c"></span><span class="g on"></span><span class="f"></span></div></div>
@@ -327,114 +296,158 @@ let showNutrients=localStorage.getItem('alimentazione_nutrients')!=='0';
 function toggleNutrients(){showNutrients=!showNutrients;localStorage.setItem('alimentazione_nutrients',showNutrients?'1':'0');updateNutrients()}
 function updateNutrients(){document.getElementById('spesa').classList.toggle('hide-nutrients',!showNutrients);const b=document.getElementById('nutriBtn');b.classList.toggle('active',showNutrients);b.textContent=showNutrients?'Indicatori nutrienti: ON':'Indicatori nutrienti: OFF'}
 
-/* ===== Calcolo nutrizionale del piano =====
-   Valori stimati e arrotondati; prima scelta del piano.
-   L'extra quotidiano è modellato separatamente per poter scegliere mandorle/macadamia.
-*/
-const nutritionBase = {
-  lun: [
-    {name:'Colazione', kcal:537, p:31, c:61, g:19, f:10},
-    {name:'Pranzo', kcal:762, p:29, c:106, g:25, f:10},
-    {name:'Spuntino', kcal:119, p:10, c:0, g:9, f:0},
-    {name:'Cena', kcal:709, p:43, c:48, g:37, f:10}
-  ],
-  mar: [
-    {name:'Colazione', kcal:453, p:29, c:49, g:16, f:8},
-    {name:'Pranzo', kcal:579, p:29, c:66, g:22, f:12},
-    {name:'Spuntino', kcal:119, p:10, c:0, g:9, f:0},
-    {name:'Cena', kcal:378, p:43, c:7, g:18, f:4}
-  ],
-  mer: [
-    {name:'Colazione', kcal:537, p:31, c:61, g:19, f:10},
-    {name:'Pranzo', kcal:765, p:24, c:115, g:24, f:8},
-    {name:'Spuntino', kcal:119, p:10, c:0, g:9, f:0},
-    {name:'Cena', kcal:555, p:47, c:48, g:18, f:10}
-  ],
-  gio: [
-    {name:'Colazione', kcal:453, p:29, c:49, g:16, f:8},
-    {name:'Pranzo', kcal:587, p:25, c:64, g:25, f:12},
-    {name:'Spuntino', kcal:119, p:10, c:0, g:9, f:0},
-    {name:'Cena', kcal:365, p:46, c:8, g:16, f:4}
-  ],
-  ven: [
-    {name:'Colazione', kcal:537, p:31, c:61, g:19, f:10},
-    {name:'Pranzo', kcal:764, p:29, c:107, g:25, f:10},
-    {name:'Spuntino', kcal:119, p:10, c:0, g:9, f:0}
-  ],
-  sab: [
-    {name:'Colazione', kcal:453, p:29, c:49, g:16, f:8},
-    {name:'Pranzo', kcal:614, p:28, c:77, g:22, f:13},
-    {name:'Spuntino', kcal:119, p:10, c:0, g:9, f:0}
-  ],
-  dom: [
-    {name:'Colazione', kcal:453, p:29, c:49, g:16, f:8},
-    {name:'Pranzo', kcal:616, p:24, c:74, g:25, f:14},
-    {name:'Spuntino', kcal:119, p:10, c:0, g:9, f:0},
-    {name:'Cena', kcal:409, p:42, c:8, g:22, f:4}
-  ]
+/* ===== Calcolo nutrizionale automatico =====
+   Tabella alimenti: valori medi per 100 g (crudo / parte edibile), fonti tabelle standard (CREA/USDA), arrotondati.
+   Familia Nature Crunch: valori medi stimati per granola; verificare l'etichetta. */
+const FOODS = {
+  skyr:{n:'Skyr / yogurt greco proteico',kcal:63,p:11,c:4,g:0.2,f:0},
+  mirtilli:{n:'mirtilli',kcal:57,p:0.7,c:14.5,g:0.3,f:2.4},
+  crunch:{n:'Familia Nature Crunch',kcal:430,p:9,c:62,g:14,f:8},
+  noci:{n:'noci',kcal:654,p:15,c:14,g:65,f:7},
+  mandorle:{n:'mandorle',kcal:579,p:21,c:22,g:50,f:12},
+  macadamia:{n:'macadamia',kcal:718,p:8,c:14,g:76,f:9},
+  pasta:{n:'pasta',kcal:356,p:12.5,c:72,g:1.5,f:3},
+  pastaInt:{n:'pasta integrale',kcal:340,p:13,c:64,g:2.5,f:8},
+  riso:{n:'riso',kcal:350,p:7,c:79,g:0.6,f:1.3},
+  risoInt:{n:'riso integrale',kcal:350,p:7.5,c:74,g:2.7,f:3.5},
+  pane:{n:'pane integrale',kcal:250,p:9,c:45,g:3.5,f:7},
+  patateDolci:{n:'patate dolci',kcal:86,p:1.6,c:20,g:0.1,f:3},
+  patate:{n:'patate',kcal:77,p:2,c:17,g:0.1,f:2.2},
+  uova:{n:'uova',kcal:143,p:12.6,c:0.7,g:9.5,f:0},
+  albumi:{n:'albumi',kcal:52,p:11,c:0.7,g:0.2,f:0},
+  tonno:{n:'tonno al naturale (sgocciolato)',kcal:110,p:25,c:0,g:1,f:0},
+  fiocchi:{n:'fiocchi di latte / cottage',kcal:98,p:11,c:3.4,g:4.3,f:0},
+  ricotta:{n:'ricotta vaccina',kcal:146,p:9,c:3.5,g:11,f:0},
+  grana:{n:'Grana Padano',kcal:398,p:33,c:0,g:29,f:0},
+  fondente:{n:'fondente >85%',kcal:600,p:10,c:20,g:50,f:12},
+  salmone:{n:'salmone',kcal:208,p:20,c:0,g:13,f:0},
+  pollo:{n:'petto di pollo',kcal:110,p:23,c:0,g:1.5,f:0},
+  tacchino:{n:'petto di tacchino',kcal:107,p:24,c:0,g:1,f:0},
+  manzo:{n:'manzo magro',kcal:130,p:22,c:0,g:4.5,f:0},
+  orata:{n:'orata / spigola',kcal:121,p:20,c:0,g:4.5,f:0},
+  banana:{n:'banana',kcal:89,p:1.1,c:23,g:0.3,f:2.6},
+  frutta:{n:'frutta di stagione',kcal:52,p:0.3,c:14,g:0.2,f:2.4},
+  verdure:{n:'verdure (½ fondina)',kcal:25,p:2,c:4,g:0.3,f:2.5},
+  evo:{n:'olio EVO',kcal:884,p:0,c:0,g:100,f:0},
+  avocado:{n:'avocado',kcal:160,p:2,c:9,g:15,f:7}
 };
-
-const extraNuts = {
-  mandorle: {name:'10 mandorle extra', kcal:69, p:2, c:2, g:6, f:1},
-  macadamia:{name:'10 macadamia extra', kcal:171, p:2, c:3, g:18, f:2}
+/* Unità per la descrizione: grammi di riferimento per pezzo */
+const UNITS = {uova:[55,'uova','uovo'],noci:[5,'noci','noce'],mandorle:[1.2,'mandorle','mandorla'],macadamia:[2.5,'macadamia','macadamia'],banana:[120,'banane','banana'],evo:[10,'cucchiai EVO','cucchiaio EVO'],verdure:[300,'fondine di verdure','fondina di verdure']};
+const DINNER_OUT = {kcal:800,p:40,c:80,g:35,f:8};
+const BRK_ON  = {items:[['skyr',250],['mirtilli',100],['crunch',60],['noci',20]]};
+const BRK_OFF = {items:[['skyr',250],['mirtilli',100],['crunch',60],['noci',15]]};
+const SNACK_ON  = {items:[['grana',30]], alt:{items:[['fondente',10],['mandorle',15]]}};
+const SNACK_OFF = {items:[['grana',30],['frutta',150]], alt:{items:[['avocado',70],['pane',40]]}};
+const PLAN = {
+  lun:{on:true, meta:'Allenamento circa 10:00/10:30–12:00', meals:[
+    {name:'Colazione · 08:00–09:00', ...BRK_ON},
+    {name:'Pranzo · 12:30', items:[['pasta',100],['uova',110],['albumi',100],['verdure',150],['evo',10],['banana',120]], note:'Uova + albumi strapazzati o frittata. Zucchine o carote.',
+      alt:{items:[['riso',100],['fiocchi',150],['tonno',80],['verdure',150],['evo',10],['banana',120]], note:'Fiocchi di latte + tonno al posto di uova e albumi.'}},
+    {name:'Spuntino', ...SNACK_ON},
+    {name:'Cena', items:[['salmone',180],['patateDolci',250],['verdure',150],['evo',10]], note:'Broccoli.',
+      alt:{items:[['pollo',200],['patateDolci',250],['verdure',150],['evo',15]], note:'Fagiolini o zucchine.'}}]},
+  mar:{on:false, meals:[
+    {name:'Colazione', ...BRK_OFF},
+    {name:'Pranzo', items:[['fiocchi',200],['pastaInt',90],['verdure',150],['evo',10],['frutta',150]],
+      alt:{items:[['uova',110],['albumi',100],['pane',80],['verdure',150],['evo',10],['frutta',150]], note:'Oppure tonno 120 g al posto di uova + albumi.'}},
+    {name:'Spuntino', ...SNACK_OFF},
+    {name:'Cena', items:[['pollo',180],['patate',250],['verdure',150],['evo',15],['pane',40]],
+      alt:{items:[['orata',220],['patate',250],['verdure',150],['evo',15],['pane',40]], note:'Tacchino o pesce magro.'}}]},
+  mer:{on:true, meta:'Allenamento circa 10:00/10:30–12:00', meals:[
+    {name:'Colazione', ...BRK_ON},
+    {name:'Pranzo', items:[['riso',100],['uova',110],['tonno',80],['verdure',150],['evo',10],['banana',120]],
+      alt:{items:[['pasta',100],['ricotta',150],['albumi',100],['verdure',150],['evo',10],['banana',120]], note:'Ricotta + albumi.'}},
+    {name:'Spuntino', ...SNACK_ON},
+    {name:'Cena', items:[['pollo',200],['patateDolci',300],['verdure',150],['evo',15],['pane',40]], note:'Spinaci.',
+      alt:{items:[['salmone',180],['patateDolci',250],['verdure',150],['evo',10],['pane',40]]}}]},
+  gio:{on:false, meals:[
+    {name:'Colazione', ...BRK_OFF},
+    {name:'Pranzo', items:[['uova',110],['albumi',100],['pastaInt',90],['verdure',150],['evo',10],['frutta',150]],
+      alt:{items:[['fiocchi',200],['pane',80],['verdure',150],['evo',10],['frutta',150]], note:'Oppure tonno 120 g.'}},
+    {name:'Spuntino', ...SNACK_OFF},
+    {name:'Cena', items:[['tacchino',180],['risoInt',70],['verdure',150],['evo',15]],
+      alt:{items:[['orata',220],['patate',300],['verdure',150],['evo',15]], note:'Pollo, orata o spigola.'}}]},
+  ven:{on:true, meta:'Cena fuori', out:true, meals:[
+    {name:'Colazione', ...BRK_ON},
+    {name:'Pranzo', items:[['pasta',100],['uova',110],['albumi',100],['verdure',150],['evo',10],['banana',120]],
+      alt:{items:[['riso',100],['ricotta',150],['tonno',80],['verdure',150],['evo',10],['banana',120]]}},
+    {name:'Spuntino', ...SNACK_ON}]},
+  sab:{on:false, meta:'Cena fuori', out:true, meals:[
+    {name:'Colazione', ...BRK_OFF},
+    {name:'Pranzo', items:[['fiocchi',200],['pastaInt',90],['verdure',150],['evo',10],['frutta',150]],
+      alt:{items:[['uova',110],['albumi',100],['pane',80],['verdure',150],['evo',10],['frutta',150]]}},
+    {name:'Spuntino', ...SNACK_OFF}]},
+  dom:{on:false, meals:[
+    {name:'Colazione', ...BRK_OFF},
+    {name:'Pranzo', items:[['uova',110],['tonno',80],['pastaInt',90],['verdure',150],['evo',10],['frutta',150]],
+      alt:{items:[['fiocchi',200],['risoInt',90],['verdure',150],['evo',10],['frutta',150]]}},
+    {name:'Spuntino', ...SNACK_OFF},
+    {name:'Cena', items:[['manzo',180],['patate',300],['verdure',150],['evo',15]],
+      alt:{items:[['pollo',200],['patate',300],['verdure',150],['evo',15]], note:'Pollo o tacchino.'}}]}
 };
+const EXTRA = {mandorle:[['mandorle',12]], macadamia:[['macadamia',25]]};
+function itemMacros([k,gr]){const f=FOODS[k];const m=gr/100;return {kcal:f.kcal*m,p:f.p*m,c:f.c*m,g:f.g*m,f:f.f*m}}
+function sumMacros(rows){return rows.reduce((a,r)=>({kcal:a.kcal+r.kcal,p:a.p+r.p,c:a.c+r.c,g:a.g+r.g,f:a.f+r.f}),{kcal:0,p:0,c:0,g:0,f:0})}
+function mealMacros(items){return sumMacros(items.map(itemMacros))}
+function describe(items){return items.map(([k,gr])=>{const u=UNITS[k];
+  if(u){const n=Math.round(gr/u[0]*2)/2;const ns=n===0.5?'½':String(n).replace('.5',' ½').replace('.',',');if(n===0.5)return `<span class="qty">½ ${u[2]}</span>`;return `<span class="qty">${n} ${n===1?u[2]:u[1]}</span>`+(k==='verdure'||k==='evo'?'':` (${gr} g)`)}
+  return `<span class="qty">${gr} g ${FOODS[k].n}</span>`}).join(' + ')}
+function dayRows(day,extra,variableDinner,choices){
+  const d=PLAN[day];let rows=[];
+  d.meals.forEach((m,i)=>{
+    if(m.name==='Cena' && day===variableDinner) return;
+    const useAlt=m.alt && choices[day+'_'+i]==='2';
+    rows.push({name:m.name.split(' · ')[0]+(useAlt?' (2ª)':''),...mealMacros(useAlt?m.alt.items:m.items)});
+  });
+  if(d.out || day===variableDinner) rows.push({name:'Cena fuori (stima)',...DINNER_OUT});
+  rows.push({name:'Extra '+extra,...mealMacros(EXTRA[extra])});
+  return rows;
+}
 
 let selectedExtra = localStorage.getItem('nutrition_extra') || 'mandorle';
+if(!EXTRA[selectedExtra]) selectedExtra='mandorle';
 let variableDinner = localStorage.getItem('nutrition_variable_dinner') || 'mar';
-
-function setExtraNuts(type){
-  selectedExtra = type;
-  localStorage.setItem('nutrition_extra',type);
-  renderNutrition();
-}
-function setVariableDinner(day){
-  variableDinner = day;
-  localStorage.setItem('nutrition_variable_dinner',day);
-  renderNutrition();
-}
-function sumMacros(rows){
-  return rows.reduce((a,r)=>({
-    kcal:a.kcal+r.kcal,p:a.p+r.p,c:a.c+r.c,g:a.g+r.g,f:a.f+r.f
-  }),{kcal:0,p:0,c:0,g:0,f:0});
-}
+let choices = {};
+try{ choices = JSON.parse(localStorage.getItem('nutrition_choices')||'{}') || {}; }catch(e){ choices = {}; }
+function setExtraNuts(type){ selectedExtra=type; localStorage.setItem('nutrition_extra',type); renderNutrition(); }
+function setVariableDinner(day){ variableDinner=day; localStorage.setItem('nutrition_variable_dinner',day); renderPlan(); }
+function setChoice(key,val){ choices[key]=val; localStorage.setItem('nutrition_choices',JSON.stringify(choices)); renderPlan(); }
 function fmt(v){ return Math.round(v); }
-
+function renderPlan(){
+  Object.keys(PLAN).forEach(day=>{
+    const d=PLAN[day], sec=document.getElementById(day); if(!sec) return;
+    const b=sec.querySelector('.badge'); b.className='badge '+(d.on?'on':'off'); b.textContent=d.on?'ALLENAMENTO':'OFF';
+    const outTonight = d.out || day===variableDinner;
+    const meta=[d.meta && d.meta!=='Cena fuori' ? d.meta : '', outTonight?'Cena fuori':''].filter(Boolean).join(' · ');
+    const mt=sec.querySelector('.meta'); mt.textContent=meta; mt.style.display=meta?'':'none';
+    let html='';
+    d.meals.forEach((m,i)=>{
+      const key=day+'_'+i, useAlt=m.alt && choices[key]==='2';
+      if(m.name==='Cena' && day===variableDinner) return;
+      const toggle=m.alt?`<span class="choice"><button class="${useAlt?'':'active'}" onclick="setChoice('${key}','1')">1ª</button><button class="${useAlt?'active':''}" onclick="setChoice('${key}','2')">2ª scelta</button></span>`:'';
+      const note=m.note?` ${m.note}`:'';
+      const alt=m.alt?`<span class="alt ${useAlt?'':'inactive'}">2ª scelta: ${describe(m.alt.items)}.${m.alt.note?' '+m.alt.note:''}</span>`:'';
+      html+=`<div class="meal"><h3>${m.name}${toggle}</h3><p class="${useAlt?'chosen-alt':''}">${describe(m.items)}.${note}</p>${alt}</div>`;
+    });
+    if(outTonight) html+=`<div class="meal"><h3>Cena</h3><p><b>Fuori.</b> Preferire carne o pesce + verdure.<span class="note">Nel totale: stima ~${DINNER_OUT.kcal} kcal, ${DINNER_OUT.p} g proteine.</span></p></div>`;
+    sec.querySelector('.meals').innerHTML=html;
+  });
+  renderNutrition();
+}
 function renderNutrition(){
   document.getElementById('extraMandorle')?.classList.toggle('active',selectedExtra==='mandorle');
   document.getElementById('extraMacadamia')?.classList.toggle('active',selectedExtra==='macadamia');
   document.getElementById('dinnerMar')?.classList.toggle('active',variableDinner==='mar');
   document.getElementById('dinnerMer')?.classList.toggle('active',variableDinner==='mer');
-
-  ['lun','mar','mer','gio','ven','sab','dom'].forEach(day=>{
-    let rows = nutritionBase[day].map(x=>({...x}));
-    const dinnerOut = (day==='ven'||day==='sab'||day===variableDinner);
-    if((day==='mar'||day==='mer') && day===variableDinner){
-      rows = rows.filter(r=>r.name!=='Cena');
-    }
-    rows.push({...extraNuts[selectedExtra]});
+  document.getElementById('dinnerNone')?.classList.toggle('active',variableDinner==='none');
+  Object.keys(PLAN).forEach(day=>{
+    const rows=dayRows(day,selectedExtra,variableDinner,choices);
     const total=sumMacros(rows);
-
-    let label='Stima della giornata';
-    if(day==='ven'||day==='sab'||day===variableDinner) label='Totale prima della cena fuori';
-
-    const detailRows=rows.map(r=>`
-      <tr>
-        <td>${r.name}</td>
-        <td>${fmt(r.kcal)}</td>
-        <td>${fmt(r.p)}</td>
-        <td>${fmt(r.c)}</td>
-        <td>${fmt(r.g)}</td>
-        <td>${fmt(r.f)}</td>
-      </tr>`).join('');
-
-    const note = (day==='mar'||day==='mer') && day===variableDinner
-      ? 'La cena prevista a casa è esclusa perché hai indicato questa sera come cena fuori.'
-      : (day==='ven'||day==='sab')
-        ? 'La cena fuori non è inclusa nel calcolo.'
-        : 'Calcolo sulla prima scelta del piano.';
-
-    const target=document.getElementById('nutrition-'+day);
-    if(!target) return;
+    const out=PLAN[day].out||day===variableDinner;
+    const label=out?'Stima della giornata (cena fuori stimata)':'Stima della giornata';
+    const detailRows=rows.map(r=>`<tr><td>${r.name}</td><td>${fmt(r.kcal)}</td><td>${fmt(r.p)}</td><td>${fmt(r.c)}</td><td>${fmt(r.g)}</td><td>${fmt(r.f)}</td></tr>`).join('');
+    const note=out?`La cena fuori è una stima fissa (~${DINNER_OUT.kcal} kcal, ${DINNER_OUT.p} g P).`:'Calcolo sulle scelte selezionate.';
+    const target=document.getElementById('nutrition-'+day); if(!target) return;
     target.innerHTML=`
       <div class="nutrition-title">${label}</div>
       <div class="nutrition-grid">
@@ -454,9 +467,8 @@ function renderNutrition(){
       </details>`;
   });
 }
-
 const saved=localStorage.getItem('alimentazione_view');if(saved)showView(saved);
-updateOnlyMissingButton();applyOnlyMissing();updateNutrients();renderNutrition();
+updateOnlyMissingButton();applyOnlyMissing();updateNutrients();renderPlan();
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js'))}
 </script>
 </body>
