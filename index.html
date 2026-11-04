@@ -84,6 +84,7 @@ h1{font-size:25px;margin:2px 0 4px}.sub{font-size:13px;color:var(--muted)}
 }
 
 @media(max-width:420px){.wrap{padding:10px 8px 30px}.card,.day,.shop-category{border-radius:14px}.meal p{font-size:15px}.controls{grid-template-columns:1fr}}
+.add-row{display:flex;gap:8px;margin-top:10px}.add-row input{flex:1;min-width:0;font-size:17px;padding:12px;border:1px solid var(--line);border-radius:12px}.add-row button{font-size:16px;font-weight:700;padding:12px 16px;border-radius:12px;border:1px solid #111827;background:#111827;color:#fff}.del-btn{border:1px solid var(--line);background:#fff;border-radius:10px;width:40px;height:40px;font-size:20px;line-height:1;margin-left:auto;flex:none}
 </style>
 </head>
 <body>
@@ -242,6 +243,18 @@ h1{font-size:25px;margin:2px 0 4px}.sub{font-size:13px;color:var(--muted)}
 <div class="shop-item"><input id="pepe" type="checkbox"><div><div class="shop-name">Pepe</div></div><div class="nutri"><span class="p"></span><span class="c"></span><span class="g"></span><span class="f"></span></div></div>
 </section>
 
+<section class="shop-category"><h2>🧴 Casa e igiene</h2>
+<div class="shop-item"><input id="dentifricio" type="checkbox"><div><div class="shop-name">Dentifricio</div></div><div class="nutri"><span class="p"></span><span class="c"></span><span class="g"></span><span class="f"></span></div></div>
+<div class="shop-item"><input id="collutorio" type="checkbox"><div><div class="shop-name">Colluttorio</div></div><div class="nutri"><span class="p"></span><span class="c"></span><span class="g"></span><span class="f"></span></div></div>
+<div class="shop-item"><input id="filo" type="checkbox"><div><div class="shop-name">Filo interdentale</div></div><div class="nutri"><span class="p"></span><span class="c"></span><span class="g"></span><span class="f"></span></div></div>
+<div class="shop-item"><input id="deodorante" type="checkbox"><div><div class="shop-name">Deodorante</div></div><div class="nutri"><span class="p"></span><span class="c"></span><span class="g"></span><span class="f"></span></div></div>
+</section>
+
+<section class="shop-category" id="customCat"><h2>✍️ Altri articoli</h2><div class="tip">Scrivi un articolo e tocca «Aggiungi». Resta salvato; la × lo elimina.</div>
+<div id="customList"></div>
+<div class="add-row"><input id="customInput" type="text" placeholder="Es. carta da cucina" enterkeyhint="done"><button onclick="addCustom()">Aggiungi</button></div>
+</section>
+
 <div class="footer-note">Gli indicatori mostrano i nutrienti prevalenti in modo pratico; le alternative non vanno necessariamente acquistate tutte insieme.</div>
 </main>
 </div>
@@ -264,8 +277,30 @@ boxes.forEach(b=>{
 function clearAll(){
  boxes.forEach(b=>b.checked=false);
  saveChecks();
+ customItems.forEach(c=>c.checked=false);saveCustom();renderCustom();
  applyOnlyMissing();
 }
+/* Articoli liberi (salvati in localStorage) */
+let customItems=[];
+try{customItems=JSON.parse(localStorage.getItem('shop_custom')||'[]')||[]}catch(e){customItems=[]}
+function saveCustom(){localStorage.setItem('shop_custom',JSON.stringify(customItems))}
+function renderCustom(){
+ const list=document.getElementById('customList');list.innerHTML='';
+ customItems.forEach(c=>{
+  const row=document.createElement('div');row.className='shop-item';
+  const cb=document.createElement('input');cb.type='checkbox';cb.checked=!!c.checked;
+  cb.addEventListener('change',()=>{c.checked=cb.checked;saveCustom();applyOnlyMissing()});
+  const wrap=document.createElement('div');const nm=document.createElement('div');nm.className='shop-name';nm.textContent=c.name;wrap.appendChild(nm);
+  const del=document.createElement('button');del.className='del-btn';del.textContent='×';del.setAttribute('aria-label','Elimina '+c.name);
+  del.addEventListener('click',()=>{if(confirm('Eliminare «'+c.name+'»?')){customItems=customItems.filter(x=>x!==c);saveCustom();renderCustom();applyOnlyMissing()}});
+  row.append(cb,wrap,del);list.appendChild(row);
+ });
+}
+function addCustom(){
+ const inp=document.getElementById('customInput');const name=inp.value.trim();if(!name)return;
+ customItems.push({id:Date.now(),name,checked:true});saveCustom();inp.value='';renderCustom();applyOnlyMissing();
+}
+document.getElementById('customInput').addEventListener('keydown',e=>{if(e.key==='Enter')addCustom()});
 let onlyMissing=localStorage.getItem('alimentazione_only_missing')==='1';
 function toggleOnlyMissing(){
  onlyMissing=!onlyMissing;
@@ -468,7 +503,7 @@ function renderNutrition(){
   });
 }
 const saved=localStorage.getItem('alimentazione_view');if(saved)showView(saved);
-updateOnlyMissingButton();applyOnlyMissing();updateNutrients();renderPlan();
+renderCustom();updateOnlyMissingButton();applyOnlyMissing();updateNutrients();renderPlan();
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js'))}
 </script>
 </body>
